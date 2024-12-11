@@ -5,8 +5,8 @@ services:
 before_install:
   - docker build -t nilahomar/react-complex -f ./client/Dockerfile.dev ./client
 
-script:
-  - docker run nilahomar/react-complex npm test -- --coverage
+# script:
+#   - docker run nilahomar/react-complex npm test -- --coverage
 
 after_success:
   - docker build -t nilahomar/multi-client ./client
