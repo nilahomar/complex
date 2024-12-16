@@ -1,5 +1,4 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
 import{BrowserRouter as Router, Route, Link} from 'react-router-dom'
 import OtherPage from './OtherPage';
@@ -8,6 +7,7 @@ function App() {
   return (
     <Router>
     <div className="App">
+      <h1> Hey there</h1>
       <header className="App-header">
         <Link to="/">Home</Link>
         <Link to="/otherPage">Other Page</Link>
