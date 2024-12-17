@@ -1,5 +1,29 @@
 language: generic
 
+sudo: required
+services:
+  - docker
+
+before_install:
+  - docker build -t nilahomar/react-complex -f ./client/Dockerfile.dev ./client
+
+script:
+  - docker run -e CI=true nilahomar/react-complex npm test
+
+after_success:
+  - docker build -t nilahomar/multi-client ./client
+  - docker build -t nilahomar/multi-nginx ./nginx
+  - docker build -t nilahomar/multi-server ./server
+  - docker build -t nilahomar/multi-worker ./worker
+
+  # Log in to the docker CLI
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+  # Take those images and push then to docker hub
+  - docker push nilahomar/multi-client
+  - docker push nilahomar/multi-nginx
+  - docker push nilahomar/multi-server
+  - docker push nilahomar/multi-worker
+
 deploy:
   provider: elasticbeanstalk
   region: 'eu-central-1'
